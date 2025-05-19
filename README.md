@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lipa Batangas School Heat Index Dashboard
 
 ## Overview
@@ -80,3 +81,6 @@ The backend will start on `http://localhost:3000` and serve the frontend from th
 git init
 git add .
 git commit -m "Initial commit" 
+=======
+# lipa-heat-index-dashboard
+>>>>>>> 391d162d998fbb5a076576507fb169fc925dfd01
