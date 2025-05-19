@@ -1,0 +1,526 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --text-color: #2c3e50;
+    --sidebar-width: 250px;
+    --success-color: #2ecc71;
+    --warning-color: #f1c40f;
+    --danger-color: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: var(--primary-color);
+    color: #fff;
+    transition: all 0.3s;
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+}
+
+#sidebar.active {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--secondary-color);
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+    background: var(--accent-color);
+}
+
+#sidebar ul li.active > a {
+    background: var(--accent-color);
+}
+
+#content,
+#schoolMapSection {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s;
+}
+#sidebar.active ~ #content,
+#sidebar.active ~ #schoolMapSection {
+    margin-left: 0;
+}
+
+#content {
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+}
+
+#content.active {
+    width: 100%;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-title {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.card-body h2 {
+    color: var(--accent-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+#sidebarCollapse {
+    background: var(--accent-color);
+    border: none;
+}
+
+#sidebarCollapse:hover {
+    background: var(--secondary-color);
+}
+
+/* Date Range Picker */
+.date-range-picker {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.date-range-picker label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.date-range-picker .form-control {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+
+/* Loading Animation */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--accent-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Alert Messages */
+.alert {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.alert-danger {
+    background: var(--danger-color);
+    color: #fff;
+}
+
+.alert-success {
+    background: var(--success-color);
+    color: #fff;
+}
+
+/* Chart Containers */
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 300px;
+    width: 100%;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content,
+    #schoolMapSection {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - var(--sidebar-width));
+    }
+    .date-range-picker .row {
+        flex-direction: column;
+    }
+    .date-range-picker .col-md-6 {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Chart Legend */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Data Table Styles */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background: #f8f9fa;
+}
+
+/* Print Styles */
+@media print {
+    #sidebar,
+    .navbar,
+    .date-range-picker {
+        display: none;
+    }
+    #content {
+        width: 100%;
+        position: static;
+    }
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* Weather Info Styles */
+.weather-info {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.weather-info:hover {
+    transform: translateY(-5px);
+}
+
+.weather-info h6 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.weather-info p {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Current Weather Card */
+.card.mb-4 {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+}
+
+.card.mb-4 .card-title {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.card.mb-4 .weather-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.card.mb-4 .weather-info h6 {
+    color: #fff;
+    opacity: 0.8;
+}
+
+.card.mb-4 .weather-info p {
+    color: #fff;
+    font-size: 1.4rem;
+}
+
+#schoolMapSection {
+    margin-top: 0;
+    padding: 0 0 20px 0;
+}
+#schoolMap {
+    height: 500px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    #schoolMap {
+        height: 300px;
+    }
+}
+
+.responsive-map {
+    height: 60vh;
+    min-height: 300px;
+    width: 100% !important;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+    display: block;
+}
+
+.card.mt-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.suggestion-card {
+    background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+.suggestion-card .card-title {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+.suggestion-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .responsive-map {
+        height: 200px;
+        min-height: 120px;
+        margin-bottom: 16px;
+    }
+    .suggestion-card .card-title {
+        font-size: 1rem;
+    }
+    .suggestion-text {
+        font-size: 1rem;
+    }
+}
+
+.wrapper.sidebar-minimized #content,
+.wrapper.sidebar-minimized #schoolMapSection {
+    margin-left: 0 !important;
+}
+
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(44, 62, 80, 0.85);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-form.card {
+    min-width: 320px;
+    max-width: 350px;
+    box-shadow: 0 0 30px rgba(44,62,80,0.2);
+    border-radius: 12px;
+    background: #fff;
+}
+#loginError {
+    font-size: 0.95rem;
+}
+
+.sidebar-logout {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 20px 16px 20px;
+    background: transparent;
+    z-index: 1100;
+}
+#sidebarLogoutBtn {
+    font-size: 1.1rem;
+    padding: 10px 0;
+    border-radius: 6px;
+}
+@media (max-width: 768px) {
+    .sidebar-logout {
+        padding: 10px 10px 8px 10px;
+    }
+    #sidebarLogoutBtn {
+        font-size: 1rem;
+        padding: 8px 0;
+    }
+} 

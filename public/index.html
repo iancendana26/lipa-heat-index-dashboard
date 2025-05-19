@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lipa Batangas Schools Heat Index Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Lipa Schools Heat Index</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#"><i class='bx bxs-dashboard'></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#"><i class='bx bxs-map'></i> School Locations</a>
+                </li>
+            </ul>
+            <!-- Add logout button at the bottom of the sidebar -->
+            <div class="sidebar-logout">
+                <button id="sidebarLogoutBtn" class="btn btn-danger w-100"><i class='bx bx-log-out'></i> Logout</button>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class='bx bx-menu'></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Current Weather -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Current Weather in Lipa City</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="weather-info">
+                                <h6>Weather Condition</h6>
+                                <p id="currentWeather">-</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="weather-info">
+                                <h6>Temperature</h6>
+                                <p id="currentTemp">-</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="weather-info">
+                                <h6>Humidity</h6>
+                                <p id="currentHumidity">-</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="weather-info">
+                                <h6>Heat Index</h6>
+                                <p id="currentHeatIndex">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Range Picker -->
+            <div class="date-range-picker">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="endDate">End Date</label>
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview Cards -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Average Heat Index</h5>
+                            <h2 id="avgHeatIndex">-</h2>
+                            <p class="text-muted">Last 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Max Heat Index</h5>
+                            <h2 id="maxHeatIndex">-</h2>
+                            <p class="text-muted">Last 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Min Heat Index</h5>
+                            <h2 id="minHeatIndex">-</h2>
+                            <p class="text-muted">Last 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Readings</h5>
+                            <h2 id="totalReadings">-</h2>
+                            <p class="text-muted">Last 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Daily Heat Index Trend</h5>
+                            <div class="chart-container">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Heat Index Distribution</h5>
+                            <div class="chart-container">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Weather Conditions Timeline</h5>
+                            <div class="chart-container">
+                                <canvas id="barChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Temperature vs Humidity</h5>
+                            <div class="chart-container">
+                                <canvas id="scatterChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add a map section for School Locations OUTSIDE of #content -->
+    <div id="schoolMapSection" style="display:none;">
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Major School Locations in Lipa, Batangas</h5>
+                <div id="schoolMap" class="responsive-map"></div>
+            </div>
+        </div>
+        <div class="card suggestion-card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">School Safety Suggestion</h5>
+                <div id="schoolSuggestion" class="suggestion-text">Loading suggestion...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay" style="display:none;">
+        <form id="loginForm" class="login-form card">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Login</h4>
+                <div class="mb-3">
+                    <label for="loginUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="loginUsername" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required>
+                </div>
+                <div id="loginError" class="text-danger mb-2" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+    <script>
+    document.getElementById('sidebarCollapse').addEventListener('click', function() {
+        document.querySelector('.wrapper').classList.toggle('sidebar-minimized');
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('content').classList.toggle('active');
+        document.getElementById('schoolMapSection').classList.toggle('active');
+    });
+    </script>
+    <style>
+    .wrapper.sidebar-minimized #content,
+    .wrapper.sidebar-minimized #schoolMapSection {
+        margin-left: 0 !important;
+    }
+    </style>
+
+    <!-- Add a logout button to the navbar -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar .container-fluid');
+        if (navbar) {
+            const logoutBtn = document.createElement('button');
+            logoutBtn.id = 'logoutBtn';
+            logoutBtn.className = 'btn btn-danger ms-2';
+            logoutBtn.textContent = 'Logout';
+            logoutBtn.style.display = 'none';
+            navbar.appendChild(logoutBtn);
+        }
+    });
+    </script>
+</body>
+</html> 
