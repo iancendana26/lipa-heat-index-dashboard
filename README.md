@@ -153,7 +153,162 @@ node server.js
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## API Documentation
 
-=======
-# lipa-heat-index-dashboard
->>>>>>> 391d162d998fbb5a076576507fb169fc925dfd01
+### Base URL
+```
+http://localhost:3000/api/heat-index
+```
+
+### Available Endpoints
+
+#### 1. Current Weather
+```http
+GET /current
+```
+Returns the latest weather data including temperature, humidity, and heat index.
+
+**Response:**
+```json
+{
+    "temperature": 27.5,
+    "humidity": 85,
+    "heatIndex": 32.8,
+    "weather": "Clear",
+    "description": "clear sky",
+    "timestamp": "2024-03-14T10:00:00Z"
+}
+```
+
+#### 2. Statistics
+```http
+GET /statistics
+```
+Returns aggregated statistics for the last 12 hours.
+
+**Response:**
+```json
+{
+    "total_readings": 12,
+    "avg_heat_index": 32.5,
+    "max_heat_index": 35.8,
+    "min_heat_index": 28.3,
+    "avg_temperature": 27.9,
+    "avg_humidity": 85
+}
+```
+
+#### 3. Daily Trends
+```http
+GET /daily
+```
+Returns hourly weather data for the last 12 hours.
+
+**Response:**
+```json
+[
+    {
+        "timestamp": "2024-03-14 10:00:00",
+        "temperature": 27.5,
+        "humidity": 85,
+        "heat_index": 32.8,
+        "reading_count": 1
+    }
+]
+```
+
+#### 4. Heat Index Distribution
+```http
+GET /distribution
+```
+Returns the distribution of heat index readings across different categories.
+
+**Response:**
+```json
+[
+    {
+        "category": "Caution",
+        "count": 5,
+        "average_heat_index": 29.5
+    },
+    {
+        "category": "Extreme Caution",
+        "count": 3,
+        "average_heat_index": 35.2
+    }
+]
+```
+
+#### 5. Weather Timeline
+```http
+GET /weather-timeline
+```
+Returns weather conditions over time with color coding.
+
+**Response:**
+```json
+[
+    {
+        "hour": "10:00",
+        "weather": "Clear",
+        "description": "clear sky",
+        "avg_temperature": 27.5,
+        "avg_humidity": 85,
+        "avg_heat_index": 32.8,
+        "reading_count": 1,
+        "color": "#f1c40f"
+    }
+]
+```
+
+#### 6. Location Comparison
+```http
+GET /location-comparison
+```
+Returns weather data comparison across different school locations.
+
+**Response:**
+```json
+[
+    {
+        "location_name": "Batangas State University - Lipa Campus",
+        "avg_heat_index": 32.5,
+        "avg_temperature": 27.9,
+        "avg_humidity": 85,
+        "reading_count": 12
+    }
+]
+```
+
+#### 7. Recent Readings
+```http
+GET /recent
+```
+Returns the 10 most recent weather readings.
+
+**Response:**
+```json
+[
+    {
+        "date": "2024-03-14T10:00:00Z",
+        "temperature": 27.5,
+        "humidity": 85,
+        "heat_index": 32.8
+    }
+]
+```
+
+### Error Responses
+All endpoints return error responses in the following format:
+```json
+{
+    "error": "Error message description"
+}
+```
+
+Common HTTP Status Codes:
+- 200: Success
+- 500: Server Error
+- 404: Not Found
+
+
